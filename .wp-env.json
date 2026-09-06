@@ -9,5 +9,7 @@
     "WP_DEBUG_LOG": true,
     "WP_ENVIRONMENT_TYPE": "local",
     "DISALLOW_FILE_EDIT": true
-  }
+  },
+  "plugins": ["./wp-content/plugins/job-listing-tracker"],
+  "themes": ["./wp-content/themes/job-listing-tracker"]
 }

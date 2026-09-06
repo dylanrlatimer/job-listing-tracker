@@ -1,0 +1,46 @@
+<?php
+/**
+ * Plugin Name: Job Listing Tracker
+ * Description: Organizes a job search around companies and their relevant positions.
+ * Version: 0.1.0
+ * Requires at least: 6.4
+ * Requires PHP: 8.0
+ * Text Domain: job-listing-tracker
+ */
+
+defined( 'ABSPATH' ) || exit;
+
+define( 'JLT_VERSION', '0.1.0' );
+define( 'JLT_PLUGIN_FILE', __FILE__ );
+define( 'JLT_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
+
+require_once JLT_PLUGIN_DIR . 'includes/post-types.php';
+require_once JLT_PLUGIN_DIR . 'includes/meta.php';
+require_once JLT_PLUGIN_DIR . 'includes/acf.php';
+require_once JLT_PLUGIN_DIR . 'includes/queries.php';
+require_once JLT_PLUGIN_DIR . 'includes/entries.php';
+require_once JLT_PLUGIN_DIR . 'includes/actions.php';
+require_once JLT_PLUGIN_DIR . 'includes/lifecycle.php';
+require_once JLT_PLUGIN_DIR . 'includes/urls.php';
+
+/**
+ * Uninstall cleanup is deferred. Do not add register_uninstall_hook() or
+ * uninstall.php yet; premature deletion logic is a risk.
+ */
+register_activation_hook( JLT_PLUGIN_FILE, 'jlt_activate' );
+register_deactivation_hook( JLT_PLUGIN_FILE, 'jlt_deactivate' );
+
+/**
+ * Flush rewrite rules after activation. Does not create or modify data.
+ */
+function jlt_activate() {
+	// M2: call jlt_register_post_types() here before flushing.
+	flush_rewrite_rules();
+}
+
+/**
+ * Flush rewrite rules after deactivation. Does not delete data.
+ */
+function jlt_deactivate() {
+	flush_rewrite_rules();
+}
