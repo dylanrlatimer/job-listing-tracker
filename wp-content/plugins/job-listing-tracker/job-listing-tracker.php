@@ -31,10 +31,23 @@ register_activation_hook( JLT_PLUGIN_FILE, 'jlt_activate' );
 register_deactivation_hook( JLT_PLUGIN_FILE, 'jlt_deactivate' );
 
 /**
- * Flush rewrite rules after activation. Does not create or modify data.
+ * Registers post types, grants administrator capabilities, and flushes rewrites.
+ * Does not create or modify application data.
  */
 function jlt_activate() {
-	// M2: call jlt_register_post_types() here before flushing.
+	jlt_register_post_types();
+
+	$role = get_role( 'administrator' );
+	if ( $role ) {
+		$caps = array_merge(
+			jlt_company_primitive_caps(),
+			jlt_position_primitive_caps()
+		);
+		foreach ( $caps as $cap ) {
+			$role->add_cap( $cap );
+		}
+	}
+
 	flush_rewrite_rules();
 }
 
