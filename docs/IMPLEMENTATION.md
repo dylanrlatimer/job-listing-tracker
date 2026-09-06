@@ -231,6 +231,30 @@ At the end, test public pages while logged out. Draft and trashed records must n
 
 Do a first responsive and keyboard pass here. It is easier to correct the basic document structure before forms and private views multiply it.
 
+### Milestone 3.5: shared-directory Admin experience
+
+Improve the administrator workflow for managing the Company-to-Position relationship. Keep Companies and Positions as separate post types linked by `jlt_company_id`. This milestone changes how administrators navigate and manage those records, not how the records are stored or displayed publicly.
+
+Add one plugin module for Admin-specific behavior and load it from the plugin bootstrap. Keep these changes in the plugin and behind WordPress Admin hooks. The theme must not participate in Admin behavior.
+
+Implement:
+
+- Group Companies and Positions under one top-level **Job Listings** Admin menu while preserving their existing list, create, and edit screens.
+- Move the ACF **Position Details** field group directly below the Position title so the required Company relationship is visible before the main content editor. Commit the resulting Local JSON change.
+- Add Company and Availability columns to the Positions list. The Company name should link to that Company's edit screen. A missing or unavailable relationship should display a clear fallback rather than an empty cell or PHP warning.
+- Add a Company filter to the Positions list. Apply it only to the main `jlt_position` Admin query, validate the selected ID, and leave unrelated Admin queries unchanged.
+- Add a **Positions at this Company** panel to the Company edit screen. List each related Position's title, availability, publication status, and edit link. Include non-trashed statuses that an administrator may need to manage, not only published Positions. Show a useful empty state when the Company has none.
+- Add an **Add Position for this Company** action to that panel. It should open the normal new-Position screen with the current Company preselected in the ACF Company field.
+- Treat the Company ID passed to the new-Position screen only as a default value. Confirm that it identifies a `jlt_company` the current user may edit, do not overwrite an existing Position's saved relationship, and do not treat the query parameter as authorization or as saved data.
+
+Use a Company-scoped Admin query for the related-Positions panel. Do not weaken or reuse the public query in a way that allows draft, private, or otherwise unpublished Positions onto the public site.
+
+Do not build inline Position editing inside the Company form, a custom Admin application, AJAX behavior, or another stored relationship. Position creation and editing should continue through WordPress's standard Position editor.
+
+At the end, an administrator should be able to create a Company, remain in that Company's editing context, start a Position with the Company already selected, and later see and open all non-trashed Positions related to that Company. The Positions list must support the reverse workflow by showing and filtering on Company. Existing Company-to-Position relationships, capabilities, public URLs, and public directory behavior must remain unchanged.
+
+Verify the workflow with a Company that has no Positions, a Company with Positions in more than one publication and availability state, an invalid Company ID in the prefill URL, and an existing Position whose saved Company must not be overwritten. Check the debug log and the relevant Admin queries before moving to Milestone 4.
+
 ### Milestone 4: authentication and the Bank shell
 
 Connect the existing account screens to the application and establish one private route.

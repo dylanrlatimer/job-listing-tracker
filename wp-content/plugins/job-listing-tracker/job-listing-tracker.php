@@ -23,6 +23,10 @@ require_once JLT_PLUGIN_DIR . 'includes/actions.php';
 require_once JLT_PLUGIN_DIR . 'includes/lifecycle.php';
 require_once JLT_PLUGIN_DIR . 'includes/urls.php';
 
+if ( is_admin() ) {
+	require_once JLT_PLUGIN_DIR . 'includes/admin.php';
+}
+
 /**
  * Uninstall cleanup is deferred. Do not add register_uninstall_hook() or
  * uninstall.php yet; premature deletion logic is a risk.
