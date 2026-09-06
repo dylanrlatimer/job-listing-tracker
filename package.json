@@ -1,0 +1,32 @@
+{
+  "name": "job-listing-tracker",
+  "version": "0.1.0",
+  "description": "A WordPress application for organizing a job search around companies and their relevant positions.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "env:start": "wp-env start",
+    "env:update": "wp-env start --update",
+    "env:stop": "wp-env stop",
+    "env:status": "wp-env status",
+    "env:logs": "wp-env logs",
+    "wp": "wp-env run cli wp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dylanrlatimer/job-listing-tracker.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/dylanrlatimer/job-listing-tracker/issues"
+  },
+  "homepage": "https://github.com/dylanrlatimer/job-listing-tracker#readme",
+  "devDependencies": {
+    "@wordpress/env": "^11.14.0"
+  }
+}
