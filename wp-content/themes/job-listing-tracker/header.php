@@ -6,6 +6,9 @@
 	<?php wp_head(); ?>
 </head>
 <body <?php body_class(); ?>>
+<a class="skip-link screen-reader-text" href="#main">
+	<?php esc_html_e( 'Skip to content', 'job-listing-tracker' ); ?>
+</a>
 <?php wp_body_open(); ?>
 <header id="site-header" role="banner">
 	<div class="site-branding">
