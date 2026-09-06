@@ -257,3 +257,29 @@ textarea:focus-visible {
 		margin-top: 0.75rem;
 	}
 }
+
+/* ── Auth links ────────────────────────────────── */
+.site-auth-links {
+	display: flex;
+	gap: 1rem;
+	align-items: center;
+	margin-left: auto;
+}
+
+/* ── Bank ──────────────────────────────────────── */
+.bank-overview,
+.bank-company,
+.bank-position {
+	margin-top: 2rem;
+}
+
+.bank-notice {
+	padding: 0.75rem 1rem;
+	background: #f0f6ff;
+	border-left: 4px solid #2271b1;
+	margin-bottom: 1.5rem;
+}
+
+.bank-action {
+	margin-top: 2rem;
+}

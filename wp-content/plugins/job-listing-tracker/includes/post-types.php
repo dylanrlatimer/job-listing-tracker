@@ -105,4 +105,34 @@ function jlt_register_post_types() {
 			'menu_icon'       => 'dashicons-portfolio',
 		)
 	);
+
+	register_post_type(
+		'jlt_company_entry',
+		array(
+			'public'              => false,
+			'publicly_queryable'  => false,
+			'exclude_from_search' => true,
+			'show_ui'             => false,
+			'show_in_rest'        => false,
+			'rewrite'             => false,
+			'query_var'           => false,
+			'delete_with_user'    => true,
+			'supports'            => array(),
+		)
+	);
+
+	register_post_type(
+		'jlt_position_entry',
+		array(
+			'public'              => false,
+			'publicly_queryable'  => false,
+			'exclude_from_search' => true,
+			'show_ui'             => false,
+			'show_in_rest'        => false,
+			'rewrite'             => false,
+			'query_var'           => false,
+			'delete_with_user'    => true,
+			'supports'            => array(),
+		)
+	);
 }

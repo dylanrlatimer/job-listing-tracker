@@ -24,4 +24,18 @@
 		);
 		?>
 	</nav>
+	<div class="site-auth-links">
+		<?php if ( is_user_logged_in() ) : ?>
+			<a href="<?php echo esc_url( jlt_bank_url() ); ?>">
+				<?php esc_html_e( 'My Bank', 'job-listing-tracker' ); ?>
+			</a>
+			<a href="<?php echo esc_url( wp_logout_url( home_url( '/' ) ) ); ?>">
+				<?php esc_html_e( 'Log out', 'job-listing-tracker' ); ?>
+			</a>
+		<?php else : ?>
+			<a href="<?php echo esc_url( wp_login_url( get_permalink() ) ); ?>">
+				<?php esc_html_e( 'Log in', 'job-listing-tracker' ); ?>
+			</a>
+		<?php endif; ?>
+	</div>
 </header>

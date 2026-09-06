@@ -72,6 +72,16 @@ if ( have_posts() ) :
 			<?php endif; ?>
 		</section>
 
+		<?php if ( ! is_user_logged_in() ) : ?>
+			<section class="bank-action" aria-label="<?php esc_attr_e( 'Bank', 'job-listing-tracker' ); ?>">
+				<p>
+					<a href="<?php echo esc_url( jlt_login_url( get_permalink() ) ); ?>">
+						<?php esc_html_e( 'Log in to add this company to your bank', 'job-listing-tracker' ); ?>
+					</a>
+				</p>
+			</section>
+		<?php endif; ?>
+
 	</article>
 
 		<?php
