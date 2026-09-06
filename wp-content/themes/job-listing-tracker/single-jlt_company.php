@@ -80,6 +80,25 @@ if ( have_posts() ) :
 					</a>
 				</p>
 			</section>
+		<?php else : ?>
+			<?php $entry = jlt_get_company_entry( get_current_user_id(), get_the_ID() ); ?>
+			<section class="bank-action" aria-label="<?php esc_attr_e( 'Bank', 'job-listing-tracker' ); ?>">
+				<?php if ( $entry ) : ?>
+					<p>
+						<a href="<?php echo esc_url( jlt_bank_entry_url( 'company', $entry->ID ) ); ?>">
+							<?php esc_html_e( 'Saved in your bank', 'job-listing-tracker' ); ?>
+						</a>
+					</p>
+				<?php else : ?>
+					<form method="post" action="<?php echo esc_url( jlt_action_url( 'jlt_add_company' ) ); ?>">
+						<?php wp_nonce_field( 'jlt_add_company', 'jlt_nonce' ); ?>
+						<input type="hidden" name="company_id" value="<?php echo absint( get_the_ID() ); ?>">
+						<button type="submit">
+							<?php esc_html_e( 'Add to bank', 'job-listing-tracker' ); ?>
+						</button>
+					</form>
+				<?php endif; ?>
+			</section>
 		<?php endif; ?>
 
 	</article>

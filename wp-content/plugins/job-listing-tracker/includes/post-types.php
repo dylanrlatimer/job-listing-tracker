@@ -11,6 +11,15 @@ function jlt_availability_values() {
 }
 
 /**
+ * Returns the allowed status values for company entries.
+ *
+ * @return string[]
+ */
+function jlt_company_status_values() {
+	return array( 'interested', 'contacted', 'not_pursuing' );
+}
+
+/**
  * Returns the primitive capabilities for company management.
  *
  * @return string[]

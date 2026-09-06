@@ -3,15 +3,11 @@ defined( 'ABSPATH' ) || exit;
 
 $notice   = sanitize_key( $args['notice'] ?? '' );
 $messages = array(
-	/*
-	 * Notice code => human-readable message.
-	 * Populated in M5 (company actions) and M6 (position actions).
-	 * Example:
-	 *   'added'   => __( 'Company added to your bank.', 'job-listing-tracker' ),
-	 *   'updated' => __( 'Changes saved.', 'job-listing-tracker' ),
-	 *   'removed' => __( 'Company removed from your bank.', 'job-listing-tracker' ),
-	 *   'error'   => __( 'Something went wrong. Please try again.', 'job-listing-tracker' ),
-	 */
+	'added'         => __( 'Company added to your bank.', 'job-listing-tracker' ),
+	'updated'       => __( 'Changes saved.', 'job-listing-tracker' ),
+	'removed'       => __( 'Company removed from your bank.', 'job-listing-tracker' ),
+	'has_positions' => __( 'Remove all tracked positions at this company first.', 'job-listing-tracker' ),
+	'error'         => __( 'Something went wrong. Please try again.', 'job-listing-tracker' ),
 );
 
 if ( $notice && isset( $messages[ $notice ] ) ) {

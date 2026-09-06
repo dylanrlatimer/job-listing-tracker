@@ -12,7 +12,8 @@
     "env:stop": "wp-env stop",
     "env:status": "wp-env status",
     "env:logs": "wp-env logs",
-    "wp": "wp-env run cli wp"
+    "wp": "wp-env run cli wp",
+    "test": "wp-env run tests-cli --env-cwd=wp-content/plugins/job-listing-tracker phpunit"
   },
   "repository": {
     "type": "git",

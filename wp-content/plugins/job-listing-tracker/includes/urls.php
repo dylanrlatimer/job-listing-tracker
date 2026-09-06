@@ -42,6 +42,16 @@ function jlt_login_url( $redirect_url = '' ) {
 }
 
 /**
+ * Returns the admin-post.php URL for a named action.
+ *
+ * @param string $action Action name.
+ * @return string
+ */
+function jlt_action_url( $action ) {
+	return add_query_arg( 'action', sanitize_key( $action ), admin_url( 'admin-post.php' ) );
+}
+
+/**
  * Resolves the current Bank page view from request parameters.
  *
  * Reads 'view', 'entry', and 'notice' from $_GET. If an entry ID is supplied,

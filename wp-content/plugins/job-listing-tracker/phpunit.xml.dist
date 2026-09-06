@@ -6,7 +6,7 @@
 	colors="true">
 	<testsuites>
 		<testsuite name="job-listing-tracker">
-			<directory suffix=".php">tests/</directory>
+			<file>tests/Test_Company_Entries.php</file>
 		</testsuite>
 	</testsuites>
 </phpunit>

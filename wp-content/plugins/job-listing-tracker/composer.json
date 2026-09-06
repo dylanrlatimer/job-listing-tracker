@@ -1,0 +1,8 @@
+{
+  "name": "dylanrlatimer/job-listing-tracker",
+  "description": "Organizes a job search around companies and their relevant positions.",
+  "type": "wordpress-plugin",
+  "require-dev": {
+    "yoast/phpunit-polyfills": "^4.0"
+  }
+}

@@ -12,6 +12,16 @@ function jlt_sanitize_availability( $value ) {
 }
 
 /**
+ * Sanitizes a company-entry status. Returns 'interested' for any unrecognized input.
+ *
+ * @param mixed $value Raw status value.
+ * @return string
+ */
+function jlt_sanitize_company_status( $value ) {
+	return in_array( $value, jlt_company_status_values(), true ) ? $value : 'interested';
+}
+
+/**
  * Authorization callback for shared post metadata.
  *
  * @param bool   $allowed  Whether the user can add this meta.
@@ -154,6 +164,31 @@ function jlt_register_shared_meta() {
 				'sanitize_callback' => 'jlt_sanitize_availability',
 				'default'           => 'unknown',
 			)
+		)
+	);
+
+	register_post_meta(
+		'jlt_company_entry',
+		'jlt_company_id',
+		array(
+			'type'              => 'integer',
+			'single'            => true,
+			'show_in_rest'      => false,
+			'sanitize_callback' => 'absint',
+			'auth_callback'     => '__return_false',
+		)
+	);
+
+	register_post_meta(
+		'jlt_company_entry',
+		'jlt_status',
+		array(
+			'type'              => 'string',
+			'single'            => true,
+			'show_in_rest'      => false,
+			'sanitize_callback' => 'jlt_sanitize_company_status',
+			'auth_callback'     => '__return_false',
+			'default'           => 'interested',
 		)
 	);
 }

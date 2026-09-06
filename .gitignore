@@ -1,5 +1,6 @@
 node_modules/
 .wp-env.override.json
+wp-content/plugins/job-listing-tracker/vendor/
 
 wp-content/uploads/
 wp-content/debug.log
