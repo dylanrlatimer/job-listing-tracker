@@ -14,7 +14,7 @@ get_template_part( 'template-parts/notices', null, array( 'notice' => $notice ) 
 				$company_id = absint( get_post_meta( $entry->ID, 'jlt_company_id', true ) );
 				$company    = $company_id ? get_post( $company_id ) : null;
 				$status     = (string) get_post_meta( $entry->ID, 'jlt_status', true );
-				$label      = $company instanceof WP_Post
+				$label      = ( $company instanceof WP_Post && 'publish' === $company->post_status )
 					? $company->post_title
 					: __( '(company unavailable)', 'job-listing-tracker' );
 				$status_label = ucwords( str_replace( '_', ' ', $status ) );

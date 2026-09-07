@@ -1,26 +1,31 @@
 <?php
 defined( 'ABSPATH' ) || exit;
 
-$entry         = $args['entry'] ?? null;
-$notice        = $args['notice'] ?? '';
-$pos_id        = 0;
-$position      = null;
-$pos_meta      = array();
-$status        = 'interested';
-$applied_on    = '';
-$notes         = '';
-$company_entry = null;
+$entry              = $args['entry'] ?? null;
+$notice             = $args['notice'] ?? '';
+$pos_id             = 0;
+$position           = null;
+$position_available = false;
+$pos_meta           = array();
+$status             = 'interested';
+$applied_on         = '';
+$notes              = '';
+$company_entry      = null;
 
 if ( $entry instanceof WP_Post ) {
-	$pos_id     = absint( get_post_meta( $entry->ID, 'jlt_position_id', true ) );
-	$position   = $pos_id ? get_post( $pos_id ) : null;
-	$pos_meta   = $position ? jlt_get_position_meta( $pos_id ) : array();
-	$status     = (string) get_post_meta( $entry->ID, 'jlt_status', true );
-	$applied_on = (string) get_post_meta( $entry->ID, 'jlt_applied_on', true );
-	$notes      = $entry->post_content;
+	$pos_id             = absint( get_post_meta( $entry->ID, 'jlt_position_id', true ) );
+	$position           = $pos_id ? get_post( $pos_id ) : null;
+	$position_available = $position instanceof WP_Post && 'publish' === $position->post_status;
+	$pos_meta           = $position_available ? jlt_get_position_meta( $pos_id ) : array();
+	$status             = (string) get_post_meta( $entry->ID, 'jlt_status', true );
+	$applied_on         = (string) get_post_meta( $entry->ID, 'jlt_applied_on', true );
+	$notes              = $entry->post_content;
 
-	if ( ! empty( $pos_meta['company_id'] ) ) {
-		$company_entry = jlt_get_company_entry( (int) $entry->post_author, $pos_meta['company_id'] );
+	$linked_company_id = $position instanceof WP_Post
+		? absint( get_post_meta( $pos_id, 'jlt_company_id', true ) )
+		: 0;
+	if ( $linked_company_id ) {
+		$company_entry = jlt_get_company_entry( (int) $entry->post_author, $linked_company_id );
 	}
 }
 
@@ -30,7 +35,7 @@ get_template_part( 'template-parts/notices', null, array( 'notice' => $notice ) 
 	<?php if ( $entry instanceof WP_Post ) : ?>
 		<h2>
 			<?php
-			echo $position instanceof WP_Post
+			echo $position_available
 				? esc_html( $position->post_title )
 				: esc_html__( '(position unavailable)', 'job-listing-tracker' );
 			?>

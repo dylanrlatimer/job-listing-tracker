@@ -1,19 +1,21 @@
 <?php
 defined( 'ABSPATH' ) || exit;
 
-$entry      = $args['entry'] ?? null;
-$notice     = $args['notice'] ?? '';
-$company    = null;
-$company_id = 0;
-$meta       = array();
-$status     = 'interested';
-$notes      = '';
-$has_pos    = false;
+$entry             = $args['entry'] ?? null;
+$notice            = $args['notice'] ?? '';
+$company           = null;
+$company_id        = 0;
+$company_available = false;
+$meta              = array();
+$status            = 'interested';
+$notes             = '';
+$has_pos           = false;
 
 if ( $entry instanceof WP_Post ) {
-	$company_id = absint( get_post_meta( $entry->ID, 'jlt_company_id', true ) );
-	$company    = $company_id ? get_post( $company_id ) : null;
-	$meta       = $company ? jlt_get_company_meta( $company_id ) : array();
+	$company_id        = absint( get_post_meta( $entry->ID, 'jlt_company_id', true ) );
+	$company           = $company_id ? get_post( $company_id ) : null;
+	$company_available = $company instanceof WP_Post && 'publish' === $company->post_status;
+	$meta              = $company_available ? jlt_get_company_meta( $company_id ) : array();
 	$status     = (string) get_post_meta( $entry->ID, 'jlt_status', true );
 	$notes      = $entry->post_content;
 	$has_pos    = jlt_has_tracked_positions_at_company( $company_id, (int) $entry->post_author );
@@ -25,13 +27,13 @@ get_template_part( 'template-parts/notices', null, array( 'notice' => $notice ) 
 	<?php if ( $entry instanceof WP_Post ) : ?>
 		<h2>
 			<?php
-			echo $company instanceof WP_Post
+			echo $company_available
 				? esc_html( $company->post_title )
 				: esc_html__( '(company unavailable)', 'job-listing-tracker' );
 			?>
 		</h2>
 
-		<?php if ( $meta ) : ?>
+		<?php if ( $company_available && $meta ) : ?>
 			<dl class="company-details">
 				<?php if ( ! empty( $meta['type'] ) ) : ?>
 					<dt><?php esc_html_e( 'Type', 'job-listing-tracker' ); ?></dt>
@@ -57,16 +59,18 @@ get_template_part( 'template-parts/notices', null, array( 'notice' => $notice ) 
 		<?php endif; ?>
 
 		<?php
-		$tracked_entries = jlt_get_position_entries_for_company_entry( $entry->ID, (int) $entry->post_author );
-		$tracked_ids     = array();
-		foreach ( $tracked_entries as $pe ) {
-			$tracked_ids[] = absint( get_post_meta( $pe->ID, 'jlt_position_id', true ) );
-		}
-		$all_positions       = jlt_get_company_positions( $company_id );
+		$tracked_entries     = jlt_get_position_entries_for_company_entry( $entry->ID, (int) $entry->post_author );
 		$available_positions = array();
-		foreach ( $all_positions as $pos ) {
-			if ( ! in_array( $pos->ID, $tracked_ids, true ) ) {
-				$available_positions[] = $pos;
+		if ( $company_available ) {
+			$tracked_ids = array();
+			foreach ( $tracked_entries as $pe ) {
+				$tracked_ids[] = absint( get_post_meta( $pe->ID, 'jlt_position_id', true ) );
+			}
+			$all_positions = jlt_get_company_positions( $company_id );
+			foreach ( $all_positions as $pos ) {
+				if ( ! in_array( $pos->ID, $tracked_ids, true ) ) {
+					$available_positions[] = $pos;
+				}
 			}
 		}
 		?>
@@ -79,7 +83,7 @@ get_template_part( 'template-parts/notices', null, array( 'notice' => $notice ) 
 						<?php
 						$pe_pos_id = absint( get_post_meta( $pe->ID, 'jlt_position_id', true ) );
 						$pe_pos    = $pe_pos_id ? get_post( $pe_pos_id ) : null;
-						$pe_title  = $pe_pos instanceof WP_Post
+						$pe_title  = ( $pe_pos instanceof WP_Post && 'publish' === $pe_pos->post_status )
 							? $pe_pos->post_title
 							: __( '(position unavailable)', 'job-listing-tracker' );
 						$pe_status = (string) get_post_meta( $pe->ID, 'jlt_status', true );
