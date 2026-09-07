@@ -13,6 +13,17 @@ function jlt_bank_url() {
 }
 
 /**
+ * Returns the canonical URL of the Settings page.
+ * Falls back to /settings/ if the page has not been created yet.
+ *
+ * @return string
+ */
+function jlt_settings_url() {
+	$page = get_page_by_path( 'settings' );
+	return $page ? get_permalink( $page->ID ) : home_url( '/settings/' );
+}
+
+/**
  * Returns a Bank view URL for a specific entry.
  *
  * @param string $view     'company' or 'position'.

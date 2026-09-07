@@ -361,6 +361,26 @@ textarea:focus-visible {
 	resize: vertical;
 }
 
+.field-locked {
+	max-width: 40rem;
+	cursor: not-allowed;
+}
+
+.field-locked input:disabled,
+.field-locked input[readonly] {
+	pointer-events: none;
+	background: var(--color-bg-subtle);
+	color: var(--color-muted);
+	cursor: not-allowed;
+}
+
+.settings-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--space-3);
+	margin-top: var(--space-5);
+}
+
 .item-list {
 	list-style: none;
 	margin: 0 0 var(--space-5);
