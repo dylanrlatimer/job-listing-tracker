@@ -14,7 +14,16 @@
 			endwhile;
 			?>
 		</ul>
-		<?php the_posts_pagination(); ?>
+		<?php
+		the_posts_pagination(
+			array(
+				'mid_size'  => 2,
+				'end_size'  => 1,
+				'prev_text' => __( 'Previous', 'job-listing-tracker' ),
+				'next_text' => __( 'Next', 'job-listing-tracker' ),
+			)
+		);
+		?>
 	<?php else : ?>
 		<p><?php esc_html_e( 'No companies found.', 'job-listing-tracker' ); ?></p>
 	<?php endif; ?>

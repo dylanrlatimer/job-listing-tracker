@@ -113,7 +113,23 @@ function jlt_get_company_positions( $company_id ) {
 	return $positions;
 }
 
+add_action( 'pre_get_posts', 'jlt_company_archive_per_page' );
 add_action( 'template_redirect', 'jlt_enforce_position_company_visibility' );
+
+/**
+ * Loads 12 companies per archive page so the 3-column grid fills evenly.
+ *
+ * @param WP_Query $query The query.
+ */
+function jlt_company_archive_per_page( $query ) {
+	if ( is_admin() || ! $query->is_main_query() ) {
+		return;
+	}
+
+	if ( $query->is_post_type_archive( 'jlt_company' ) ) {
+		$query->set( 'posts_per_page', 12 );
+	}
+}
 
 /**
  * Returns a 404 when a position's referenced company is not published.
