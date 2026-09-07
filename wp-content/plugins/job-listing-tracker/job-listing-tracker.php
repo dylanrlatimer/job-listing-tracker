@@ -22,9 +22,14 @@ require_once JLT_PLUGIN_DIR . 'includes/entries.php';
 require_once JLT_PLUGIN_DIR . 'includes/actions.php';
 require_once JLT_PLUGIN_DIR . 'includes/lifecycle.php';
 require_once JLT_PLUGIN_DIR . 'includes/urls.php';
+require_once JLT_PLUGIN_DIR . 'includes/import.php';
 
 if ( is_admin() ) {
 	require_once JLT_PLUGIN_DIR . 'includes/admin.php';
+}
+
+if ( defined( 'WP_CLI' ) && WP_CLI ) {
+	require_once JLT_PLUGIN_DIR . 'includes/cli.php';
 }
 
 /**

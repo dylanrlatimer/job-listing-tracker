@@ -11,5 +11,8 @@
     "DISALLOW_FILE_EDIT": true
   },
   "plugins": ["./wp-content/plugins/job-listing-tracker"],
-  "themes": ["./wp-content/themes/job-listing-tracker"]
+  "themes": ["./wp-content/themes/job-listing-tracker"],
+  "mappings": {
+    "wp-content/jlt-data": "./data"
+  }
 }

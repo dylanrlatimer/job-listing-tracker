@@ -9,6 +9,7 @@
 			<file>tests/Test_Company_Entries.php</file>
 			<file>tests/Test_Position_Entries.php</file>
 			<file>tests/Test_Lifecycle.php</file>
+			<file>tests/Test_Import.php</file>
 		</testsuite>
 	</testsuites>
 </phpunit>

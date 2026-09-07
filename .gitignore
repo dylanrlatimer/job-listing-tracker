@@ -10,5 +10,7 @@ wp-content/debug.log
 .env.*
 !.env.example
 
+data/*.csv
+
 .DS_Store
 Thumbs.db
