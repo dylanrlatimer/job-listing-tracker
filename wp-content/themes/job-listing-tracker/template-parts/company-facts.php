@@ -7,7 +7,7 @@ if ( ! $post_id ) {
 }
 
 $meta = jlt_get_company_meta( $post_id );
-$has  = $meta['type'] || $meta['location'] || $meta['address'] || $meta['website'] || $meta['tech_stack'];
+$has  = $meta['type'] || $meta['location'] || $meta['address'] || $meta['website'];
 if ( ! $has ) {
 	return;
 }
@@ -37,10 +37,5 @@ if ( ! $has ) {
 				<?php echo esc_html( $meta['website'] ); ?>
 			</a>
 		</dd>
-	<?php endif; ?>
-
-	<?php if ( $meta['tech_stack'] ) : ?>
-		<dt><?php esc_html_e( 'Technology stack', 'job-listing-tracker' ); ?></dt>
-		<dd><?php echo nl2br( esc_html( $meta['tech_stack'] ) ); ?></dd>
 	<?php endif; ?>
 </dl>

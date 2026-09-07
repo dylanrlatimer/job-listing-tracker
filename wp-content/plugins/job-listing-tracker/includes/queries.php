@@ -5,16 +5,15 @@ defined( 'ABSPATH' ) || exit;
  * Returns view-ready company custom field values.
  *
  * @param int $post_id Company post ID.
- * @return array{type:string,website:string,location:string,address:string,tech_stack:string}
+ * @return array{type:string,website:string,location:string,address:string}
  */
 function jlt_get_company_meta( $post_id ) {
 	$post_id = absint( $post_id );
 	return array(
-		'type'       => (string) get_post_meta( $post_id, 'jlt_company_type', true ),
-		'website'    => (string) get_post_meta( $post_id, 'jlt_website_url', true ),
-		'location'   => (string) get_post_meta( $post_id, 'jlt_location', true ),
-		'address'    => (string) get_post_meta( $post_id, 'jlt_address', true ),
-		'tech_stack' => (string) get_post_meta( $post_id, 'jlt_tech_stack', true ),
+		'type'     => (string) get_post_meta( $post_id, 'jlt_company_type', true ),
+		'website'  => (string) get_post_meta( $post_id, 'jlt_website_url', true ),
+		'location' => (string) get_post_meta( $post_id, 'jlt_location', true ),
+		'address'  => (string) get_post_meta( $post_id, 'jlt_address', true ),
 	);
 }
 

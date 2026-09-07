@@ -128,18 +128,6 @@ function jlt_register_shared_meta() {
 	);
 
 	register_post_meta(
-		'jlt_company',
-		'jlt_tech_stack',
-		array_merge(
-			$shared_args,
-			array(
-				'type'              => 'string',
-				'sanitize_callback' => 'sanitize_textarea_field',
-			)
-		)
-	);
-
-	register_post_meta(
 		'jlt_position',
 		'jlt_company_id',
 		array_merge(

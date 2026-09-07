@@ -62,22 +62,6 @@
       "placeholder": "",
       "prepend": "",
       "append": ""
-    },
-    {
-      "key": "field_jlt_co_tech_stack",
-      "label": "Technology Stack",
-      "name": "jlt_tech_stack",
-      "aria-label": "",
-      "type": "textarea",
-      "instructions": "",
-      "required": 0,
-      "conditional_logic": 0,
-      "wrapper": { "width": "", "class": "", "id": "" },
-      "default_value": "",
-      "maxlength": "",
-      "placeholder": "",
-      "rows": "3",
-      "new_lines": "br"
     }
   ],
   "location": [

@@ -1,4 +1,4 @@
-# Job Listing Tracker: Schema v3
+# Job Listing Tracker: Schema v4
 
 ## Document purpose
 
@@ -6,17 +6,19 @@ This document defines the version 1 data model for Job Listing Tracker. It is th
 
 The product scope, screens, tools, and delivery plan are defined in [APP-OUTLINE-v2.md](APP-OUTLINE-v2.md).
 
+v4 supersedes [SCHEMA-v3.md](SCHEMA-v3.md). The company Technology stack field is removed. Technology stack remains a position field.
+
 ## Storage model
 
 Version 1 uses WordPress posts, post metadata, and users. It does not add custom database tables.
 
-| Record | WordPress storage | Visibility | Owner |
-| --- | --- | --- | --- |
-| User | Core user | Account-dependent | User |
-| Company | `jlt_company` post type | Public when published | Site |
-| Position | `jlt_position` post type | Public when published | Site |
-| Company entry | `jlt_company_entry` post type | Private | User |
-| Position entry | `jlt_position_entry` post type | Private | User |
+| Record         | WordPress storage              | Visibility            | Owner |
+| -------------- | ------------------------------ | --------------------- | ----- |
+| User           | Core user                      | Account-dependent     | User  |
+| Company        | `jlt_company` post type        | Public when published | Site  |
+| Position       | `jlt_position` post type       | Public when published | Site  |
+| Company entry  | `jlt_company_entry` post type  | Private               | User  |
+| Position entry | `jlt_position_entry` post type | Private               | User  |
 
 The expected data volume is small. Private entries contain only an owner, one shared-record reference, a status, notes, and an optional application date. Custom tables would add migrations and query code without solving a version 1 requirement.
 
@@ -32,29 +34,28 @@ Companies use the `jlt_company` custom post type.
 
 ### Registration
 
-| Setting | Value |
-| --- | --- |
-| `public` | `true` |
-| `has_archive` | `true` |
-| `show_in_rest` | `true` |
-| `rewrite` | `companies` |
-| `supports` | `title`, `editor`, `thumbnail` |
+| Setting        | Value                          |
+| -------------- | ------------------------------ |
+| `public`       | `true`                         |
+| `has_archive`  | `true`                         |
+| `show_in_rest` | `true`                         |
+| `rewrite`      | `companies`                    |
+| `supports`     | `title`, `editor`, `thumbnail` |
 
 ### Fields
 
-| Field | Storage | Type | Required | Rule |
-| --- | --- | --- | --- | --- |
-| ID | `ID` | Integer | Automatic | WordPress post ID |
-| Name | `post_title` | String | Yes | Non-empty after trimming |
-| Description | `post_content` | Rich text | No | Administrator-authored content |
-| Slug | `post_name` | String | Automatic | WordPress-generated unless edited |
-| Visibility | `post_status` | Core status | Yes | Draft, published, or trashed through normal editorial actions |
-| Logo | Featured image | Attachment | No | Image attachment |
-| Company type | `jlt_company_type` | String | No | Free-form text |
-| Website | `jlt_website_url` | URL | No | HTTP or HTTPS URL |
-| Location | `jlt_location` | String | No | Free-form place name |
-| Address | `jlt_address` | String | No | Free-form address |
-| Technology stack | `jlt_tech_stack` | Text | No | Free-form text; no taxonomy or controlled vocabulary |
+| Field        | Storage            | Type        | Required  | Rule                                                          |
+| ------------ | ------------------ | ----------- | --------- | ------------------------------------------------------------- |
+| ID           | `ID`               | Integer     | Automatic | WordPress post ID                                             |
+| Name         | `post_title`       | String      | Yes       | Non-empty after trimming                                      |
+| Description  | `post_content`     | Rich text   | No        | Administrator-authored content                                |
+| Slug         | `post_name`        | String      | Automatic | WordPress-generated unless edited                             |
+| Visibility   | `post_status`      | Core status | Yes       | Draft, published, or trashed through normal editorial actions |
+| Logo         | Featured image     | Attachment  | No        | Image attachment                                              |
+| Company type | `jlt_company_type` | String      | No        | Free-form text                                                |
+| Website      | `jlt_website_url`  | URL         | No        | HTTP or HTTPS URL                                             |
+| Location     | `jlt_location`     | String      | No        | Free-form place name                                          |
+| Address      | `jlt_address`      | String      | No        | Free-form address                                             |
 
 A company may exist without any positions.
 
@@ -64,30 +65,30 @@ Positions use the `jlt_position` custom post type.
 
 ### Registration
 
-| Setting | Value |
-| --- | --- |
-| `public` | `true` |
-| `has_archive` | `false` |
-| `show_in_rest` | `true` |
-| `rewrite` | `positions` |
-| `supports` | `title`, `editor` |
+| Setting        | Value             |
+| -------------- | ----------------- |
+| `public`       | `true`            |
+| `has_archive`  | `false`           |
+| `show_in_rest` | `true`            |
+| `rewrite`      | `positions`       |
+| `supports`     | `title`, `editor` |
 
 Positions are discovered through company pages rather than a separate version 1 archive.
 
 ### Fields
 
-| Field | Storage | Type | Required | Rule |
-| --- | --- | --- | --- | --- |
-| ID | `ID` | Integer | Automatic | WordPress post ID |
-| Title | `post_title` | String | Yes | Non-empty after trimming |
-| Description | `post_content` | Rich text | No | Full public position details |
-| Slug | `post_name` | String | Automatic | WordPress-generated unless edited |
-| Visibility | `post_status` | Core status | Yes | Draft, published, or trashed through normal editorial actions |
-| Company | `jlt_company_id` | Integer | Yes | ID of one existing `jlt_company` post |
-| Source URL | `jlt_source_url` | URL | No | HTTP or HTTPS link to the original listing |
-| Location | `jlt_location` | String | No | Free-form position location |
-| Technology stack | `jlt_tech_stack` | Text | No | Free-form text |
-| Availability | `jlt_availability` | String | Yes | `open`, `closed`, or `unknown`; default `unknown` |
+| Field            | Storage            | Type        | Required  | Rule                                                          |
+| ---------------- | ------------------ | ----------- | --------- | ------------------------------------------------------------- |
+| ID               | `ID`               | Integer     | Automatic | WordPress post ID                                             |
+| Title            | `post_title`       | String      | Yes       | Non-empty after trimming                                      |
+| Description      | `post_content`     | Rich text   | No        | Full public position details                                  |
+| Slug             | `post_name`        | String      | Automatic | WordPress-generated unless edited                             |
+| Visibility       | `post_status`      | Core status | Yes       | Draft, published, or trashed through normal editorial actions |
+| Company          | `jlt_company_id`   | Integer     | Yes       | ID of one existing `jlt_company` post                         |
+| Source URL       | `jlt_source_url`   | URL         | No        | HTTP or HTTPS link to the original listing                    |
+| Location         | `jlt_location`     | String      | No        | Free-form position location                                   |
+| Technology stack | `jlt_tech_stack`   | Text        | No        | Free-form text                                                |
+| Availability     | `jlt_availability` | String      | Yes       | `open`, `closed`, or `unknown`; default `unknown`             |
 
 The company field is an ACF Post Object limited to companies, single-select, and configured to return the post ID.
 
@@ -101,32 +102,32 @@ Adding a company to a user's bank creates one `jlt_company_entry` post. This rec
 
 ### Registration
 
-| Setting | Value |
-| --- | --- |
-| `public` | `false` |
-| `publicly_queryable` | `false` |
-| `exclude_from_search` | `true` |
-| `show_ui` | `false` |
-| `show_in_rest` | `false` |
-| `rewrite` | `false` |
-| `query_var` | `false` |
-| `delete_with_user` | `true` |
-| `supports` | None |
+| Setting               | Value   |
+| --------------------- | ------- |
+| `public`              | `false` |
+| `publicly_queryable`  | `false` |
+| `exclude_from_search` | `true`  |
+| `show_ui`             | `false` |
+| `show_in_rest`        | `false` |
+| `rewrite`             | `false` |
+| `query_var`           | `false` |
+| `delete_with_user`    | `true`  |
+| `supports`            | None    |
 
 Entries are created and edited only through the plugin's front-end handlers. They have no public permalink or administrator editing screen.
 
 ### Fields
 
-| Field | Storage | Type | Required | Rule |
-| --- | --- | --- | --- | --- |
-| Entry ID | `ID` | Integer | Automatic | WordPress post ID |
-| Owner | `post_author` | Integer | Yes | Authenticated WordPress user ID |
-| Internal title | `post_title` | String | Automatic | Generated for diagnostics; never shown to users |
-| Notes | `post_content` | Plain text | No | One editable notes field |
-| Created | `post_date_gmt` | Datetime | Automatic | WordPress creation time |
-| Updated | `post_modified_gmt` | Datetime | Automatic | WordPress modification time |
-| Company | `jlt_company_id` | Integer | Yes | ID of one existing `jlt_company` post |
-| Status | `jlt_status` | String | Yes | `interested`, `contacted`, or `not_pursuing`; default `interested` |
+| Field          | Storage             | Type       | Required  | Rule                                                               |
+| -------------- | ------------------- | ---------- | --------- | ------------------------------------------------------------------ |
+| Entry ID       | `ID`                | Integer    | Automatic | WordPress post ID                                                  |
+| Owner          | `post_author`       | Integer    | Yes       | Authenticated WordPress user ID                                    |
+| Internal title | `post_title`        | String     | Automatic | Generated for diagnostics; never shown to users                    |
+| Notes          | `post_content`      | Plain text | No        | One editable notes field                                           |
+| Created        | `post_date_gmt`     | Datetime   | Automatic | WordPress creation time                                            |
+| Updated        | `post_modified_gmt` | Datetime   | Automatic | WordPress modification time                                        |
+| Company        | `jlt_company_id`    | Integer    | Yes       | ID of one existing `jlt_company` post                              |
+| Status         | `jlt_status`        | String     | Yes       | `interested`, `contacted`, or `not_pursuing`; default `interested` |
 
 The post uses the `publish` status. This does not make it public because the post type is non-public, non-queryable, excluded from search, and absent from REST.
 
@@ -136,31 +137,31 @@ Tracking a position creates one `jlt_position_entry` post. This record stores on
 
 ### Registration
 
-| Setting | Value |
-| --- | --- |
-| `public` | `false` |
-| `publicly_queryable` | `false` |
-| `exclude_from_search` | `true` |
-| `show_ui` | `false` |
-| `show_in_rest` | `false` |
-| `rewrite` | `false` |
-| `query_var` | `false` |
-| `delete_with_user` | `true` |
-| `supports` | None |
+| Setting               | Value   |
+| --------------------- | ------- |
+| `public`              | `false` |
+| `publicly_queryable`  | `false` |
+| `exclude_from_search` | `true`  |
+| `show_ui`             | `false` |
+| `show_in_rest`        | `false` |
+| `rewrite`             | `false` |
+| `query_var`           | `false` |
+| `delete_with_user`    | `true`  |
+| `supports`            | None    |
 
 ### Fields
 
-| Field | Storage | Type | Required | Rule |
-| --- | --- | --- | --- | --- |
-| Entry ID | `ID` | Integer | Automatic | WordPress post ID |
-| Owner | `post_author` | Integer | Yes | Authenticated WordPress user ID |
-| Internal title | `post_title` | String | Automatic | Generated for diagnostics; never shown to users |
-| Notes | `post_content` | Plain text | No | One editable notes field |
-| Created | `post_date_gmt` | Datetime | Automatic | WordPress creation time |
-| Updated | `post_modified_gmt` | Datetime | Automatic | WordPress modification time |
-| Position | `jlt_position_id` | Integer | Yes | ID of one existing `jlt_position` post |
-| Status | `jlt_status` | String | Yes | Allowed position status; default `interested` |
-| Applied date | `jlt_applied_on` | Date string | No | Strict `YYYY-MM-DD` value or empty |
+| Field          | Storage             | Type        | Required  | Rule                                            |
+| -------------- | ------------------- | ----------- | --------- | ----------------------------------------------- |
+| Entry ID       | `ID`                | Integer     | Automatic | WordPress post ID                               |
+| Owner          | `post_author`       | Integer     | Yes       | Authenticated WordPress user ID                 |
+| Internal title | `post_title`        | String      | Automatic | Generated for diagnostics; never shown to users |
+| Notes          | `post_content`      | Plain text  | No        | One editable notes field                        |
+| Created        | `post_date_gmt`     | Datetime    | Automatic | WordPress creation time                         |
+| Updated        | `post_modified_gmt` | Datetime    | Automatic | WordPress modification time                     |
+| Position       | `jlt_position_id`   | Integer     | Yes       | ID of one existing `jlt_position` post          |
+| Status         | `jlt_status`        | String      | Yes       | Allowed position status; default `interested`   |
+| Applied date   | `jlt_applied_on`    | Date string | No        | Strict `YYYY-MM-DD` value or empty              |
 
 Allowed position statuses are:
 
@@ -176,12 +177,12 @@ The post uses the `publish` status under the same private post-type protections 
 
 ## Relationships and uniqueness
 
-| Relationship | Cardinality | Enforcement |
-| --- | --- | --- |
-| Company to position | One to zero-or-many | Each position stores one valid `jlt_company_id` |
-| User to saved company | One entry per user and company | Plugin checks `post_author` and `jlt_company_id` before insert |
-| User to tracked position | One entry per user and position | Plugin checks `post_author` and `jlt_position_id` before insert |
-| Company entry to position entry | Indirect parent requirement | The position's company must already have a company entry for that user |
+| Relationship                    | Cardinality                     | Enforcement                                                            |
+| ------------------------------- | ------------------------------- | ---------------------------------------------------------------------- |
+| Company to position             | One to zero-or-many             | Each position stores one valid `jlt_company_id`                        |
+| User to saved company           | One entry per user and company  | Plugin checks `post_author` and `jlt_company_id` before insert         |
+| User to tracked position        | One entry per user and position | Plugin checks `post_author` and `jlt_position_id` before insert        |
+| Company entry to position entry | Indirect parent requirement     | The position's company must already have a company entry for that user |
 
 Uniqueness is enforced in application code. A database-level unique constraint is not required for the expected version 1 traffic. Add and track handlers must check for an existing entry immediately before insertion and return that entry rather than creating a duplicate.
 
@@ -197,14 +198,14 @@ ACF field groups are saved and loaded as Local JSON inside the custom plugin. Pr
 
 ## Validation and sanitization
 
-| Input | Rule |
-| --- | --- |
-| Shared-record IDs | Convert with `absint()` and confirm the referenced post type exists |
-| URLs | Sanitize with `esc_url_raw()` and accept only HTTP or HTTPS |
-| Status and availability | Accept only the values listed in this document |
-| Applied date | Accept empty or a real calendar date matching `YYYY-MM-DD` exactly |
-| Private notes | Sanitize as multiline plain text; HTML is not stored |
-| Short free-form fields | Trim and sanitize as plain text |
+| Input                   | Rule                                                                |
+| ----------------------- | ------------------------------------------------------------------- |
+| Shared-record IDs       | Convert with `absint()` and confirm the referenced post type exists |
+| URLs                    | Sanitize with `esc_url_raw()` and accept only HTTP or HTTPS         |
+| Status and availability | Accept only the values listed in this document                      |
+| Applied date            | Accept empty or a real calendar date matching `YYYY-MM-DD` exactly  |
+| Private notes           | Sanitize as multiline plain text; HTML is not stored                |
+| Short free-form fields  | Trim and sanitize as plain text                                     |
 
 All displayed data is escaped for its output context. Validation occurs on the server even when the browser also validates a field.
 

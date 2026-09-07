@@ -33,12 +33,12 @@ Version 1 must support:
 
 The application has four records:
 
-| Record | Visibility | Owner | Purpose |
-| --- | --- | --- | --- |
-| Company | Public when published | Site | Shared organization profile |
-| Position | Public when published | Site | Relevant opening belonging to one company |
-| Company entry | Private | User | The user's company-level status and notes |
-| Position entry | Private | User | The user's application status, date, and notes |
+| Record         | Visibility            | Owner | Purpose                                        |
+| -------------- | --------------------- | ----- | ---------------------------------------------- |
+| Company        | Public when published | Site  | Shared organization profile                    |
+| Position       | Public when published | Site  | Relevant opening belonging to one company      |
+| Company entry  | Private               | User  | The user's company-level status and notes      |
+| Position entry | Private               | User  | The user's application status, date, and notes |
 
 Saving a company creates a company entry; it does not copy the company. Saving a position creates a position entry; it does not copy the position. A user may track a position only after adding its company to their bank.
 
@@ -104,15 +104,15 @@ A user may stop tracking a position at any time. A company cannot be removed fro
 
 Version 1 requires these front-end screens:
 
-| Screen | Access | Responsibility |
-| --- | --- | --- |
-| Company directory | Public | Browse published companies |
-| Company detail | Public | Show one company and its published positions |
-| Position detail | Public | Show one position and link to its original source |
-| Login, registration, password recovery | Public | Front-end account access |
-| Bank overview | Signed-in user | List the user's saved companies and tracked-position summaries |
-| Banked company detail | Entry owner | Edit company tracking and manage positions at that company |
-| Tracked position detail | Entry owner | Edit position status, application date, and notes |
+| Screen                                 | Access         | Responsibility                                                 |
+| -------------------------------------- | -------------- | -------------------------------------------------------------- |
+| Company directory                      | Public         | Browse published companies                                     |
+| Company detail                         | Public         | Show one company and its published positions                   |
+| Position detail                        | Public         | Show one position and link to its original source              |
+| Login, registration, password recovery | Public         | Front-end account access                                       |
+| Bank overview                          | Signed-in user | List the user's saved companies and tracked-position summaries |
+| Banked company detail                  | Entry owner    | Edit company tracking and manage positions at that company     |
+| Tracked position detail                | Entry owner    | Edit position status, application date, and notes              |
 
 The bank can use one WordPress Page with server-rendered views selected by validated query parameters. Clean custom rewrite routes are optional polish, not a version 1 dependency.
 
@@ -151,11 +151,11 @@ Version 1 is server-rendered PHP. It does not require React, a front-end framewo
 
 ### Third-party plugins
 
-| Plugin | Environment | Use |
-| --- | --- | --- |
-| Advanced Custom Fields Free | Development and production | Administrator field UI for shared companies and positions |
-| Theme My Login | Development and production | Front-end registration, login, logout, and password recovery using WordPress accounts |
-| Query Monitor | Development only | Inspect queries, hooks, errors, and template behavior |
+| Plugin                      | Environment                | Use                                                                                   |
+| --------------------------- | -------------------------- | ------------------------------------------------------------------------------------- |
+| Advanced Custom Fields Free | Development and production | Administrator field UI for shared companies and positions                             |
+| Theme My Login              | Development and production | Front-end registration, login, logout, and password recovery using WordPress accounts |
+| Query Monitor               | Development only           | Inspect queries, hooks, errors, and template behavior                                 |
 
 ACF field groups are stored as Local JSON with the custom plugin so field configuration is version-controlled. ACF is not used to build the users' private tracking forms.
 
