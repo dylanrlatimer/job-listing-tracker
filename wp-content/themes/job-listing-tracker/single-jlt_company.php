@@ -1,59 +1,52 @@
 <?php get_header(); ?>
-<main id="main">
+<main id="main" class="wrap">
 <?php
 if ( have_posts() ) :
 	while ( have_posts() ) :
 		the_post();
-		$meta      = jlt_get_company_meta( get_the_ID() );
 		$positions = jlt_get_company_positions( get_the_ID() );
+		$entry     = is_user_logged_in()
+			? jlt_get_company_entry( get_current_user_id(), get_the_ID() )
+			: null;
 		?>
 
 	<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
-		<?php if ( has_post_thumbnail() ) : ?>
-			<div class="company-logo"><?php the_post_thumbnail( 'medium' ); ?></div>
-		<?php endif; ?>
-
-		<h1><?php the_title(); ?></h1>
-
-		<dl class="company-details">
-			<?php if ( $meta['type'] ) : ?>
-				<dt><?php esc_html_e( 'Type', 'job-listing-tracker' ); ?></dt>
-				<dd><?php echo esc_html( $meta['type'] ); ?></dd>
-			<?php endif; ?>
-
-			<?php if ( $meta['location'] ) : ?>
-				<dt><?php esc_html_e( 'Location', 'job-listing-tracker' ); ?></dt>
-				<dd><?php echo esc_html( $meta['location'] ); ?></dd>
-			<?php endif; ?>
-
-			<?php if ( $meta['address'] ) : ?>
-				<dt><?php esc_html_e( 'Address', 'job-listing-tracker' ); ?></dt>
-				<dd><?php echo esc_html( $meta['address'] ); ?></dd>
-			<?php endif; ?>
-
-			<?php if ( $meta['website'] ) : ?>
-				<dt><?php esc_html_e( 'Website', 'job-listing-tracker' ); ?></dt>
-				<dd>
-					<a href="<?php echo esc_url( $meta['website'] ); ?>"
-					   target="_blank"
-					   rel="noopener noreferrer">
-						<?php echo esc_html( $meta['website'] ); ?>
+		<header class="page-header">
+			<div class="page-header__main">
+				<?php if ( has_post_thumbnail() ) : ?>
+					<div class="page-header__logo"><?php the_post_thumbnail( 'thumbnail' ); ?></div>
+				<?php endif; ?>
+				<h1><?php the_title(); ?></h1>
+			</div>
+			<div class="page-header__action">
+				<?php if ( ! is_user_logged_in() ) : ?>
+					<a class="btn btn--primary" href="<?php echo esc_url( jlt_login_url( get_permalink() ) ); ?>">
+						<?php esc_html_e( 'Log in to add to bank', 'job-listing-tracker' ); ?>
 					</a>
-				</dd>
-			<?php endif; ?>
+				<?php elseif ( $entry ) : ?>
+					<a class="btn" href="<?php echo esc_url( jlt_bank_entry_url( 'company', $entry->ID ) ); ?>">
+						<?php esc_html_e( 'Saved in your bank', 'job-listing-tracker' ); ?>
+					</a>
+				<?php else : ?>
+					<form method="post" action="<?php echo esc_url( jlt_action_url( 'jlt_add_company' ) ); ?>">
+						<?php wp_nonce_field( 'jlt_add_company', 'jlt_nonce' ); ?>
+						<input type="hidden" name="company_id" value="<?php echo absint( get_the_ID() ); ?>">
+						<button class="btn btn--primary" type="submit">
+							<?php esc_html_e( 'Add to bank', 'job-listing-tracker' ); ?>
+						</button>
+					</form>
+				<?php endif; ?>
+			</div>
+		</header>
 
-			<?php if ( $meta['tech_stack'] ) : ?>
-				<dt><?php esc_html_e( 'Technology Stack', 'job-listing-tracker' ); ?></dt>
-				<dd><?php echo nl2br( esc_html( $meta['tech_stack'] ) ); ?></dd>
-			<?php endif; ?>
-		</dl>
+		<?php get_template_part( 'template-parts/company-facts', null, array( 'post_id' => get_the_ID() ) ); ?>
 
 		<?php if ( get_the_content() ) : ?>
-			<div class="company-description"><?php the_content(); ?></div>
+			<div class="section"><?php the_content(); ?></div>
 		<?php endif; ?>
 
-		<section class="company-positions" aria-label="<?php esc_attr_e( 'Positions', 'job-listing-tracker' ); ?>">
+		<section class="section" aria-label="<?php esc_attr_e( 'Positions', 'job-listing-tracker' ); ?>">
 			<h2><?php esc_html_e( 'Positions', 'job-listing-tracker' ); ?></h2>
 			<?php if ( $positions ) : ?>
 				<ul class="position-list">
@@ -71,35 +64,6 @@ if ( have_posts() ) :
 				<p><?php esc_html_e( 'No positions at this time.', 'job-listing-tracker' ); ?></p>
 			<?php endif; ?>
 		</section>
-
-		<?php if ( ! is_user_logged_in() ) : ?>
-			<section class="bank-action" aria-label="<?php esc_attr_e( 'Bank', 'job-listing-tracker' ); ?>">
-				<p>
-					<a href="<?php echo esc_url( jlt_login_url( get_permalink() ) ); ?>">
-						<?php esc_html_e( 'Log in to add this company to your bank', 'job-listing-tracker' ); ?>
-					</a>
-				</p>
-			</section>
-		<?php else : ?>
-			<?php $entry = jlt_get_company_entry( get_current_user_id(), get_the_ID() ); ?>
-			<section class="bank-action" aria-label="<?php esc_attr_e( 'Bank', 'job-listing-tracker' ); ?>">
-				<?php if ( $entry ) : ?>
-					<p>
-						<a href="<?php echo esc_url( jlt_bank_entry_url( 'company', $entry->ID ) ); ?>">
-							<?php esc_html_e( 'Saved in your bank', 'job-listing-tracker' ); ?>
-						</a>
-					</p>
-				<?php else : ?>
-					<form method="post" action="<?php echo esc_url( jlt_action_url( 'jlt_add_company' ) ); ?>">
-						<?php wp_nonce_field( 'jlt_add_company', 'jlt_nonce' ); ?>
-						<input type="hidden" name="company_id" value="<?php echo absint( get_the_ID() ); ?>">
-						<button type="submit">
-							<?php esc_html_e( 'Add to bank', 'job-listing-tracker' ); ?>
-						</button>
-					</form>
-				<?php endif; ?>
-			</section>
-		<?php endif; ?>
 
 	</article>
 

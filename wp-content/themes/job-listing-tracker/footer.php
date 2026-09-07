@@ -1,5 +1,7 @@
 <footer id="site-footer" role="contentinfo">
-	<p><?php bloginfo( 'name' ); ?></p>
+	<div class="wrap site-footer__inner">
+		<p><?php bloginfo( 'name' ); ?></p>
+	</div>
 </footer>
 <?php wp_footer(); ?>
 </body>

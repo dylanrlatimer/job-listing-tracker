@@ -16,26 +16,27 @@ if ( 'not_found' === $mode ) {
 
 get_header();
 ?>
-<main id="main">
+<main id="main" class="wrap">
 <?php
 if ( have_posts() ) :
 	while ( have_posts() ) :
 		the_post();
-		?>
 
-	<h1><?php the_title(); ?></h1>
+		if ( 'overview' === $mode ) {
+			get_template_part( 'template-parts/bank-overview', null, $bank_view );
+		} elseif ( 'company' === $mode ) {
+			get_template_part( 'template-parts/bank-company', null, $bank_view );
+		} elseif ( 'position' === $mode ) {
+			get_template_part( 'template-parts/bank-position', null, $bank_view );
+		} else {
+			echo '<header class="page-header"><h1>';
+			esc_html_e( 'Entry not found.', 'job-listing-tracker' );
+			echo '</h1></header>';
+			echo '<p class="back-link"><a href="' . esc_url( jlt_bank_url() ) . '">';
+			esc_html_e( 'Back to bank', 'job-listing-tracker' );
+			echo '</a></p>';
+		}
 
-	<?php if ( 'overview' === $mode ) : ?>
-		<?php get_template_part( 'template-parts/bank-overview', null, $bank_view ); ?>
-	<?php elseif ( 'company' === $mode ) : ?>
-		<?php get_template_part( 'template-parts/bank-company', null, $bank_view ); ?>
-	<?php elseif ( 'position' === $mode ) : ?>
-		<?php get_template_part( 'template-parts/bank-position', null, $bank_view ); ?>
-	<?php else : ?>
-		<p><?php esc_html_e( 'Entry not found.', 'job-listing-tracker' ); ?></p>
-	<?php endif; ?>
-
-		<?php
 	endwhile;
 endif;
 ?>

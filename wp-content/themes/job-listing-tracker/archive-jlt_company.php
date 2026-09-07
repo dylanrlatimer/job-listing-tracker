@@ -1,7 +1,9 @@
 <?php get_header(); ?>
-<main id="main">
+<main id="main" class="wrap">
 
-	<h1><?php post_type_archive_title(); ?></h1>
+	<header class="page-header">
+		<h1><?php post_type_archive_title(); ?></h1>
+	</header>
 
 	<?php if ( have_posts() ) : ?>
 		<ul class="company-list">

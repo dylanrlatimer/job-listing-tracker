@@ -78,10 +78,11 @@ function jlt_primary_menu_fallback() {
  * Enqueue the theme stylesheet.
  */
 function jlt_enqueue_assets() {
+	$style_path = get_template_directory() . '/assets/css/main.css';
 	wp_enqueue_style(
 		'jlt-main',
 		get_template_directory_uri() . '/assets/css/main.css',
 		array(),
-		wp_get_theme()->get( 'Version' )
+		file_exists( $style_path ) ? (string) filemtime( $style_path ) : null
 	);
 }

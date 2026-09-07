@@ -14,8 +14,11 @@ $messages = array(
 	'error'            => __( 'Something went wrong. Please try again.', 'job-listing-tracker' ),
 );
 
+$warn_notices = array( 'error', 'has_positions', 'no_company_entry' );
+
 if ( $notice && isset( $messages[ $notice ] ) ) {
-	echo '<div class="bank-notice" role="status">';
+	$class = in_array( $notice, $warn_notices, true ) ? 'notice notice--warn' : 'notice';
+	echo '<div class="' . esc_attr( $class ) . '" role="status">';
 	echo esc_html( $messages[ $notice ] );
 	echo '</div>';
 }

@@ -16,11 +16,12 @@ $meta = jlt_get_position_meta( $position->ID );
 		</a>
 	</h3>
 
-	<p class="position-card__availability">
-		<?php echo esc_html( ucfirst( $meta['availability'] ) ); ?>
+	<p class="position-card__meta">
+		<span class="badge badge--<?php echo esc_attr( $meta['availability'] ); ?>">
+			<?php echo esc_html( ucfirst( $meta['availability'] ) ); ?>
+		</span>
+		<?php if ( $meta['location'] ) : ?>
+			<span><?php echo esc_html( $meta['location'] ); ?></span>
+		<?php endif; ?>
 	</p>
-
-	<?php if ( $meta['location'] ) : ?>
-		<p class="position-card__location"><?php echo esc_html( $meta['location'] ); ?></p>
-	<?php endif; ?>
 </li>
