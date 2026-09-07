@@ -20,6 +20,23 @@ function jlt_company_status_values() {
 }
 
 /**
+ * Returns the allowed status values for position entries.
+ *
+ * @return string[]
+ */
+function jlt_position_status_values() {
+	return array(
+		'interested',
+		'applied',
+		'interviewing',
+		'rejected',
+		'offer',
+		'accepted',
+		'withdrawn',
+	);
+}
+
+/**
  * Returns the primitive capabilities for company management.
  *
  * @return string[]

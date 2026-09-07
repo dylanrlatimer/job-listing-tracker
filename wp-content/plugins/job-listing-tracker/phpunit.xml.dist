@@ -7,6 +7,7 @@
 	<testsuites>
 		<testsuite name="job-listing-tracker">
 			<file>tests/Test_Company_Entries.php</file>
+			<file>tests/Test_Position_Entries.php</file>
 		</testsuite>
 	</testsuites>
 </phpunit>

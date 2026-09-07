@@ -22,6 +22,39 @@ function jlt_sanitize_company_status( $value ) {
 }
 
 /**
+ * Sanitizes a position-entry status. Returns 'interested' for any unrecognized input.
+ *
+ * @param mixed $value Raw status value.
+ * @return string
+ */
+function jlt_sanitize_position_status( $value ) {
+	return in_array( $value, jlt_position_status_values(), true ) ? $value : 'interested';
+}
+
+/**
+ * Sanitizes an applied-on date. Returns empty string for invalid input.
+ *
+ * Accepts empty or a real calendar date matching YYYY-MM-DD exactly.
+ *
+ * @param mixed $value Raw date value.
+ * @return string
+ */
+function jlt_sanitize_applied_date( $value ) {
+	$value = sanitize_text_field( $value );
+	if ( '' === $value ) {
+		return '';
+	}
+	if ( ! preg_match( '/^\d{4}-\d{2}-\d{2}$/', $value ) ) {
+		return '';
+	}
+	$parts = explode( '-', $value );
+	if ( ! checkdate( (int) $parts[1], (int) $parts[2], (int) $parts[0] ) ) {
+		return '';
+	}
+	return $value;
+}
+
+/**
  * Authorization callback for shared post metadata.
  *
  * @param bool   $allowed  Whether the user can add this meta.
@@ -189,6 +222,44 @@ function jlt_register_shared_meta() {
 			'sanitize_callback' => 'jlt_sanitize_company_status',
 			'auth_callback'     => '__return_false',
 			'default'           => 'interested',
+		)
+	);
+
+	register_post_meta(
+		'jlt_position_entry',
+		'jlt_position_id',
+		array(
+			'type'              => 'integer',
+			'single'            => true,
+			'show_in_rest'      => false,
+			'sanitize_callback' => 'absint',
+			'auth_callback'     => '__return_false',
+		)
+	);
+
+	register_post_meta(
+		'jlt_position_entry',
+		'jlt_status',
+		array(
+			'type'              => 'string',
+			'single'            => true,
+			'show_in_rest'      => false,
+			'sanitize_callback' => 'jlt_sanitize_position_status',
+			'auth_callback'     => '__return_false',
+			'default'           => 'interested',
+		)
+	);
+
+	register_post_meta(
+		'jlt_position_entry',
+		'jlt_applied_on',
+		array(
+			'type'              => 'string',
+			'single'            => true,
+			'show_in_rest'      => false,
+			'sanitize_callback' => 'jlt_sanitize_applied_date',
+			'auth_callback'     => '__return_false',
+			'default'           => '',
 		)
 	);
 }

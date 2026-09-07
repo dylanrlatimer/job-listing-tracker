@@ -355,3 +355,35 @@ textarea:focus-visible {
 	margin-top: 2rem;
 	color: #555;
 }
+
+.bank-position-list,
+.bank-available-positions {
+	list-style: none;
+	margin: 0 0 1.5rem;
+	padding: 0;
+}
+
+.bank-position-list__item,
+.bank-available-positions__item {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 1rem;
+	padding: 0.75rem 0;
+	border-bottom: 1px solid #e0e0e0;
+}
+
+.bank-position-list__item:last-child,
+.bank-available-positions__item:last-child {
+	border-bottom: none;
+}
+
+.bank-available-positions__track-form {
+	display: flex;
+	margin: 0;
+}
+
+.bank-available-positions__track-form button {
+	padding: 0.35rem 0.75rem;
+	cursor: pointer;
+}

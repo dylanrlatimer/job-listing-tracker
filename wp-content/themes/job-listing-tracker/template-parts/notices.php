@@ -3,11 +3,15 @@ defined( 'ABSPATH' ) || exit;
 
 $notice   = sanitize_key( $args['notice'] ?? '' );
 $messages = array(
-	'added'         => __( 'Company added to your bank.', 'job-listing-tracker' ),
-	'updated'       => __( 'Changes saved.', 'job-listing-tracker' ),
-	'removed'       => __( 'Company removed from your bank.', 'job-listing-tracker' ),
-	'has_positions' => __( 'Remove all tracked positions at this company first.', 'job-listing-tracker' ),
-	'error'         => __( 'Something went wrong. Please try again.', 'job-listing-tracker' ),
+	'added'            => __( 'Company added to your bank.', 'job-listing-tracker' ),
+	'updated'          => __( 'Changes saved.', 'job-listing-tracker' ),
+	'removed'          => __( 'Company removed from your bank.', 'job-listing-tracker' ),
+	'has_positions'    => __( 'Remove all tracked positions at this company first.', 'job-listing-tracker' ),
+	'tracked'          => __( 'Position added to your tracking.', 'job-listing-tracker' ),
+	'position_updated' => __( 'Changes saved.', 'job-listing-tracker' ),
+	'position_removed' => __( 'Position removed from tracking.', 'job-listing-tracker' ),
+	'no_company_entry' => __( 'Add this company to your bank before tracking its positions.', 'job-listing-tracker' ),
+	'error'            => __( 'Something went wrong. Please try again.', 'job-listing-tracker' ),
 );
 
 if ( $notice && isset( $messages[ $notice ] ) ) {

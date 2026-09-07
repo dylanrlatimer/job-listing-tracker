@@ -19,7 +19,7 @@
 		wp_nav_menu(
 			array(
 				'theme_location' => 'primary',
-				'fallback_cb'    => false,
+				'fallback_cb'    => 'jlt_primary_menu_fallback',
 			)
 		);
 		?>

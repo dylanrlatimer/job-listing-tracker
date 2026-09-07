@@ -56,6 +56,67 @@ get_template_part( 'template-parts/notices', null, array( 'notice' => $notice ) 
 			</dl>
 		<?php endif; ?>
 
+		<?php
+		$tracked_entries = jlt_get_position_entries_for_company_entry( $entry->ID, (int) $entry->post_author );
+		$tracked_ids     = array();
+		foreach ( $tracked_entries as $pe ) {
+			$tracked_ids[] = absint( get_post_meta( $pe->ID, 'jlt_position_id', true ) );
+		}
+		$all_positions       = jlt_get_company_positions( $company_id );
+		$available_positions = array();
+		foreach ( $all_positions as $pos ) {
+			if ( ! in_array( $pos->ID, $tracked_ids, true ) ) {
+				$available_positions[] = $pos;
+			}
+		}
+		?>
+
+		<?php if ( $tracked_entries ) : ?>
+			<section class="bank-tracked-positions" aria-label="<?php esc_attr_e( 'Tracked positions', 'job-listing-tracker' ); ?>">
+				<h3><?php esc_html_e( 'Tracked positions', 'job-listing-tracker' ); ?></h3>
+				<ul class="bank-position-list">
+					<?php foreach ( $tracked_entries as $pe ) : ?>
+						<?php
+						$pe_pos_id = absint( get_post_meta( $pe->ID, 'jlt_position_id', true ) );
+						$pe_pos    = $pe_pos_id ? get_post( $pe_pos_id ) : null;
+						$pe_title  = $pe_pos instanceof WP_Post
+							? $pe_pos->post_title
+							: __( '(position unavailable)', 'job-listing-tracker' );
+						$pe_status = (string) get_post_meta( $pe->ID, 'jlt_status', true );
+						?>
+						<li class="bank-position-list__item">
+							<a href="<?php echo esc_url( jlt_bank_entry_url( 'position', $pe->ID ) ); ?>">
+								<?php echo esc_html( $pe_title ); ?>
+							</a>
+							<?php if ( $pe_status ) : ?>
+								<span class="bank-company-list__status"><?php echo esc_html( ucwords( str_replace( '_', ' ', $pe_status ) ) ); ?></span>
+							<?php endif; ?>
+						</li>
+					<?php endforeach; ?>
+				</ul>
+			</section>
+		<?php endif; ?>
+
+		<?php if ( $available_positions ) : ?>
+			<section class="bank-available-positions-section" aria-label="<?php esc_attr_e( 'Other positions', 'job-listing-tracker' ); ?>">
+				<h3><?php esc_html_e( 'Other positions at this company', 'job-listing-tracker' ); ?></h3>
+				<ul class="bank-available-positions">
+					<?php foreach ( $available_positions as $pos ) : ?>
+						<li class="bank-available-positions__item">
+							<a href="<?php echo esc_url( get_permalink( $pos ) ); ?>">
+								<?php echo esc_html( $pos->post_title ); ?>
+							</a>
+							<form class="bank-available-positions__track-form" method="post" action="<?php echo esc_url( jlt_action_url( 'jlt_track_position' ) ); ?>">
+								<?php wp_nonce_field( 'jlt_track_position', 'jlt_nonce' ); ?>
+								<input type="hidden" name="position_id" value="<?php echo absint( $pos->ID ); ?>">
+								<button type="submit"><?php esc_html_e( 'Track', 'job-listing-tracker' ); ?></button>
+							</form>
+						</li>
+					<?php endforeach; ?>
+				</ul>
+			</section>
+		<?php endif; ?>
+
 		<form class="bank-entry-status-form" method="post" action="<?php echo esc_url( jlt_action_url( 'jlt_update_company' ) ); ?>">
 			<?php wp_nonce_field( 'jlt_update_company', 'jlt_nonce' ); ?>
 			<input type="hidden" name="entry_id" value="<?php echo absint( $entry->ID ); ?>">
