@@ -44,7 +44,7 @@ if ( have_posts() ) :
 					</p>
 				<?php elseif ( $position_entry ) : ?>
 					<a class="btn" href="<?php echo esc_url( jlt_bank_entry_url( 'position', $position_entry->ID ) ); ?>">
-						<?php esc_html_e( 'Tracking this position', 'job-listing-tracker' ); ?>
+						<?php esc_html_e( 'Edit in bank', 'job-listing-tracker' ); ?>
 					</a>
 				<?php else : ?>
 					<form method="post" action="<?php echo esc_url( jlt_action_url( 'jlt_track_position' ) ); ?>">

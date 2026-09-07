@@ -125,18 +125,21 @@ get_template_part( 'template-parts/notices', null, array( 'notice' => $notice ) 
 
 		<?php if ( $has_pos ) : ?>
 			<p><?php esc_html_e( 'Remove all tracked positions at this company first.', 'job-listing-tracker' ); ?></p>
-		<?php else : ?>
-			<form class="bank-remove" method="post" action="<?php echo esc_url( jlt_action_url( 'jlt_remove_company' ) ); ?>">
-				<?php wp_nonce_field( 'jlt_remove_company', 'jlt_nonce' ); ?>
-				<input type="hidden" name="entry_id" value="<?php echo absint( $entry->ID ); ?>">
-				<button class="btn btn--danger" type="submit"><?php esc_html_e( 'Remove from bank', 'job-listing-tracker' ); ?></button>
-			</form>
 		<?php endif; ?>
 
-		<p class="back-link">
-			<a href="<?php echo esc_url( jlt_bank_url() ); ?>">
-				<?php esc_html_e( 'Back to bank', 'job-listing-tracker' ); ?>
-			</a>
-		</p>
+		<div class="bank-footer">
+			<p class="back-link">
+				<a href="<?php echo esc_url( jlt_bank_url() ); ?>">
+					<?php esc_html_e( 'Back to bank', 'job-listing-tracker' ); ?>
+				</a>
+			</p>
+			<?php if ( ! $has_pos ) : ?>
+				<form class="bank-remove" method="post" action="<?php echo esc_url( jlt_action_url( 'jlt_remove_company' ) ); ?>">
+					<?php wp_nonce_field( 'jlt_remove_company', 'jlt_nonce' ); ?>
+					<input type="hidden" name="entry_id" value="<?php echo absint( $entry->ID ); ?>">
+					<button class="btn btn--danger" type="submit"><?php esc_html_e( 'Remove from bank', 'job-listing-tracker' ); ?></button>
+				</form>
+			<?php endif; ?>
+		</div>
 	<?php endif; ?>
 </section>

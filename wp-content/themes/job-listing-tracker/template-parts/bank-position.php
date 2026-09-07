@@ -73,22 +73,23 @@ get_template_part( 'template-parts/notices', null, array( 'notice' => $notice ) 
 			<button class="btn btn--primary" type="submit"><?php esc_html_e( 'Save changes', 'job-listing-tracker' ); ?></button>
 		</form>
 
-		<form class="bank-remove" method="post" action="<?php echo esc_url( jlt_action_url( 'jlt_remove_position' ) ); ?>">
-			<?php wp_nonce_field( 'jlt_remove_position', 'jlt_nonce' ); ?>
-			<input type="hidden" name="entry_id" value="<?php echo absint( $entry->ID ); ?>">
-			<button class="btn btn--danger" type="submit"><?php esc_html_e( 'Stop tracking', 'job-listing-tracker' ); ?></button>
-		</form>
-
-		<p class="back-link">
-			<?php if ( $company_entry instanceof WP_Post ) : ?>
-				<a href="<?php echo esc_url( jlt_bank_entry_url( 'company', $company_entry->ID ) ); ?>">
-					<?php esc_html_e( 'Back to company', 'job-listing-tracker' ); ?>
-				</a>
-			<?php else : ?>
-				<a href="<?php echo esc_url( jlt_bank_url() ); ?>">
-					<?php esc_html_e( 'Back to bank', 'job-listing-tracker' ); ?>
-				</a>
-			<?php endif; ?>
-		</p>
+		<div class="bank-footer">
+			<p class="back-link">
+				<?php if ( $company_entry instanceof WP_Post ) : ?>
+					<a href="<?php echo esc_url( jlt_bank_entry_url( 'company', $company_entry->ID ) ); ?>">
+						<?php esc_html_e( 'Back to company', 'job-listing-tracker' ); ?>
+					</a>
+				<?php else : ?>
+					<a href="<?php echo esc_url( jlt_bank_url() ); ?>">
+						<?php esc_html_e( 'Back to bank', 'job-listing-tracker' ); ?>
+					</a>
+				<?php endif; ?>
+			</p>
+			<form class="bank-remove" method="post" action="<?php echo esc_url( jlt_action_url( 'jlt_remove_position' ) ); ?>">
+				<?php wp_nonce_field( 'jlt_remove_position', 'jlt_nonce' ); ?>
+				<input type="hidden" name="entry_id" value="<?php echo absint( $entry->ID ); ?>">
+				<button class="btn btn--danger" type="submit"><?php esc_html_e( 'Stop tracking', 'job-listing-tracker' ); ?></button>
+			</form>
+		</div>
 	<?php endif; ?>
 </section>

@@ -348,12 +348,36 @@ textarea:focus-visible {
 .login-password input,
 .login-remember input[type="text"] {
 	width: 100%;
-	max-width: 40rem;
 	padding: 0.45rem 0.55rem;
 	border: 1px solid var(--color-border);
 	border-radius: var(--radius);
 	font: inherit;
-	background: var(--color-bg);
+	background-color: var(--color-bg);
+}
+
+.tml input[type="text"],
+.tml input[type="email"],
+.tml input[type="password"],
+.tml input[type="url"],
+.tml select,
+.tml textarea,
+.login-username input,
+.login-password input,
+.login-remember input[type="text"] {
+	max-width: 40rem;
+}
+
+.field select,
+.tml select {
+	appearance: none;
+	-webkit-appearance: none;
+	padding-right: 2.25rem;
+	background-color: var(--color-bg);
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%231a1a1a' d='M3.2 5.8 8 10.6l4.8-4.8 1.2 1.2L8 13 2 7z'/%3E%3C/svg%3E");
+	background-repeat: no-repeat;
+	background-position: right 0.75rem center;
+	background-size: 0.85rem;
+	cursor: pointer;
 }
 
 .field textarea {
@@ -419,7 +443,7 @@ textarea:focus-visible {
 }
 
 .back-link {
-	margin-top: var(--space-6);
+	margin: 0;
 	font-size: var(--text-sm);
 }
 
@@ -479,44 +503,41 @@ textarea:focus-visible {
 	color: var(--color-muted);
 }
 
-/* ── Position list (company page) ──────────────── */
-.position-list {
-	list-style: none;
-	margin: 0;
-	padding: 0;
+/* ── Position table (company page) ─────────────── */
+.position-table-wrap {
+	overflow-x: auto;
 }
 
-.position-card {
-	padding: var(--space-4) 0;
+.position-table {
+	width: 100%;
+	border-collapse: collapse;
+	text-align: left;
+}
+
+.position-table th,
+.position-table td {
+	padding: var(--space-3) var(--space-4) var(--space-3) 0;
 	border-bottom: 1px solid var(--color-border);
+	vertical-align: top;
 }
 
-.position-card:last-child {
-	border-bottom: none;
+.position-table thead th {
+	font-size: var(--text-sm);
+	font-weight: 600;
+	color: var(--color-muted);
 }
 
-.position-card__title {
-	font-size: var(--text-md);
-	margin: 0 0 var(--space-1);
+.position-table tbody th {
+	font-weight: 400;
 }
 
-.position-card__title a {
+.position-table__title a {
 	color: var(--color-ink);
 	text-decoration: none;
 }
 
-.position-card__title a:hover {
+.position-table__title a:hover {
 	text-decoration: underline;
-}
-
-.position-card__meta {
-	display: flex;
-	flex-wrap: wrap;
-	align-items: center;
-	gap: var(--space-2) var(--space-3);
-	margin: 0;
-	font-size: var(--text-sm);
-	color: var(--color-muted);
 }
 
 .position-availability--closed,
@@ -525,9 +546,17 @@ textarea:focus-visible {
 }
 
 /* ── Bank ──────────────────────────────────────── */
-.bank-remove {
+.bank-footer {
 	display: flex;
-	justify-content: flex-end;
+	justify-content: space-between;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: var(--space-4);
+	margin-top: var(--space-6);
+}
+
+.bank-remove {
+	margin: 0;
 }
 
 /* ── Auth (Theme My Login / core forms) ────────── */

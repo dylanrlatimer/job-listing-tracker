@@ -11,11 +11,7 @@ $company = $meta['company_id'] ? get_post( $meta['company_id'] ) : null;
 ?>
 <dl class="facts">
 	<dt><?php esc_html_e( 'Availability', 'job-listing-tracker' ); ?></dt>
-	<dd>
-		<span class="badge badge--<?php echo esc_attr( $meta['availability'] ); ?>">
-			<?php echo esc_html( ucfirst( $meta['availability'] ) ); ?>
-		</span>
-	</dd>
+	<dd><?php echo esc_html( ucfirst( $meta['availability'] ) ); ?></dd>
 
 	<?php if ( $company instanceof WP_Post ) : ?>
 		<dt><?php esc_html_e( 'Company', 'job-listing-tracker' ); ?></dt>

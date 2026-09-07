@@ -26,7 +26,7 @@ if ( have_posts() ) :
 					</a>
 				<?php elseif ( $entry ) : ?>
 					<a class="btn" href="<?php echo esc_url( jlt_bank_entry_url( 'company', $entry->ID ) ); ?>">
-						<?php esc_html_e( 'Saved in your bank', 'job-listing-tracker' ); ?>
+						<?php esc_html_e( 'Edit in bank', 'job-listing-tracker' ); ?>
 					</a>
 				<?php else : ?>
 					<form method="post" action="<?php echo esc_url( jlt_action_url( 'jlt_add_company' ) ); ?>">
@@ -49,17 +49,28 @@ if ( have_posts() ) :
 		<section class="section" aria-label="<?php esc_attr_e( 'Positions', 'job-listing-tracker' ); ?>">
 			<h2><?php esc_html_e( 'Positions', 'job-listing-tracker' ); ?></h2>
 			<?php if ( $positions ) : ?>
-				<ul class="position-list">
-					<?php foreach ( $positions as $position ) : ?>
-						<?php
-						get_template_part(
-							'template-parts/position-card',
-							null,
-							array( 'position' => $position )
-						);
-						?>
-					<?php endforeach; ?>
-				</ul>
+				<div class="position-table-wrap">
+					<table class="position-table">
+						<thead>
+							<tr>
+								<th scope="col"><?php esc_html_e( 'Position', 'job-listing-tracker' ); ?></th>
+								<th scope="col"><?php esc_html_e( 'Status', 'job-listing-tracker' ); ?></th>
+								<th scope="col"><?php esc_html_e( 'Location', 'job-listing-tracker' ); ?></th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php foreach ( $positions as $position ) : ?>
+								<?php
+								get_template_part(
+									'template-parts/position-card',
+									null,
+									array( 'position' => $position )
+								);
+								?>
+							<?php endforeach; ?>
+						</tbody>
+					</table>
+				</div>
 			<?php else : ?>
 				<p><?php esc_html_e( 'No positions at this time.', 'job-listing-tracker' ); ?></p>
 			<?php endif; ?>
