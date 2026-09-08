@@ -10,15 +10,17 @@ Use it to answer three questions during development:
 2. Which part of the project should own it?
 3. What must work before we move on?
 
-This is not a replacement for the product documents. `APP-OUTLINE-v2.md` remains the authority for scope and `SCHEMA-v3.md` remains the authority for data. If implementation exposes a real problem in either document, stop and change the relevant document deliberately. Do not let the code quietly invent a different product.
+This is not a replacement for the product documents. `APP-OUTLINE.md` remains the authority for scope and `SCHEMA.md` remains the authority for data. If implementation exposes a real problem in either document, stop and change the relevant document deliberately. Do not let the code quietly invent a different product.
 
-## Current starting point
+## Current state
 
-The pre-steps are complete. WordPress runs through `wp-env`, the required third-party plugins are installed, registration is enabled, and the repository has `main` and `dev` branches.
+The application described in [APP-OUTLINE.md](APP-OUTLINE.md) is implemented. The plugin, theme, ACF field groups, Bank and Settings pages, and plugin tests are in the repository.
 
-No application code, theme, ACF field groups, Bank page, test accounts, or sample records exist yet.
+This document is still the map for ownership and the original milestone order. It is not a status board. If a later change conflicts with the outline or schema, those documents win.
 
-Development starts on `dev`. `main` should continue to represent the deployed, stable version.
+A WP-CLI importer can load the shared directory from CSV. See [CSV-IMPORT.md](CSV-IMPORT.md). Bank entries are never imported.
+
+Work on `dev`. Keep `main` for the stable public version.
 
 ## The shape of the application
 
@@ -76,13 +78,14 @@ job-listing-tracker/
   .wp-env.json
   .gitignore
   AGENTS.md
-  IMPLEMENTATION.md
+  LICENSE
+  README.md
   package.json
   docs/
-    APP-OUTLINE-v2.md
-    CONTEXT-PRIMER.md
-    PRESTEPS-v2.md
-    SCHEMA-v3.md
+    APP-OUTLINE.md
+    SCHEMA.md
+    IMPLEMENTATION.md
+    CSV-IMPORT.md
   wp-content/
     plugins/
       job-listing-tracker/
@@ -96,11 +99,11 @@ job-listing-tracker/
           actions.php
           lifecycle.php
           urls.php
+          admin.php
+          import.php
+          cli.php
         acf-json/
         tests/
-          bootstrap.php
-          test-entries.php
-          test-lifecycle.php
         phpunit.xml.dist
     themes/
       job-listing-tracker/
@@ -110,17 +113,13 @@ job-listing-tracker/
         index.php
         header.php
         footer.php
+        front-page.php
         archive-jlt_company.php
         single-jlt_company.php
         single-jlt_position.php
         page-bank.php
+        page-settings.php
         template-parts/
-          company-card.php
-          position-card.php
-          bank-overview.php
-          bank-company.php
-          bank-position.php
-          notices.php
         assets/
           css/main.css
           js/main.js

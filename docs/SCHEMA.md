@@ -4,9 +4,7 @@
 
 This document defines the version 1 data model for Job Listing Tracker. It is the authority for record storage, fields, relationships, ownership, validation, and deletion behavior.
 
-The product scope, screens, tools, and delivery plan are defined in [APP-OUTLINE-v2.md](APP-OUTLINE-v2.md).
-
-v4 supersedes [SCHEMA-v3.md](SCHEMA-v3.md). The company Technology stack field is removed. Technology stack remains a position field.
+The product scope, screens, tools, and delivery plan are defined in [APP-OUTLINE.md](APP-OUTLINE.md).
 
 ## Storage model
 
