@@ -1,0 +1,116 @@
+{
+  "key": "group_jlt_position",
+  "title": "Position Details",
+  "fields": [
+    {
+      "key": "field_jlt_pos_company",
+      "label": "Company",
+      "name": "jlt_company_id",
+      "aria-label": "",
+      "type": "post_object",
+      "instructions": "",
+      "required": 1,
+      "conditional_logic": 0,
+      "wrapper": { "width": "", "class": "", "id": "" },
+      "post_type": ["jlt_company"],
+      "post_status": "",
+      "taxonomy": "",
+      "return_format": "id",
+      "multiple": 0,
+      "allow_null": 0,
+      "ui": 1,
+      "ui_on_text": "",
+      "ui_off_text": ""
+    },
+    {
+      "key": "field_jlt_pos_availability",
+      "label": "Availability",
+      "name": "jlt_availability",
+      "aria-label": "",
+      "type": "select",
+      "instructions": "",
+      "required": 1,
+      "conditional_logic": 0,
+      "wrapper": { "width": "", "class": "", "id": "" },
+      "choices": {
+        "open": "Open",
+        "closed": "Closed",
+        "unknown": "Unknown"
+      },
+      "default_value": "unknown",
+      "return_format": "value",
+      "multiple": 0,
+      "allow_null": 0,
+      "allow_custom": 0,
+      "search_placeholder": "",
+      "ui": 0,
+      "ajax": 0,
+      "placeholder": ""
+    },
+    {
+      "key": "field_jlt_pos_source_url",
+      "label": "Source URL",
+      "name": "jlt_source_url",
+      "aria-label": "",
+      "type": "url",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": { "width": "", "class": "", "id": "" },
+      "default_value": "",
+      "placeholder": ""
+    },
+    {
+      "key": "field_jlt_pos_location",
+      "label": "Location",
+      "name": "jlt_location",
+      "aria-label": "",
+      "type": "text",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": { "width": "", "class": "", "id": "" },
+      "default_value": "",
+      "maxlength": "",
+      "placeholder": "",
+      "prepend": "",
+      "append": ""
+    },
+    {
+      "key": "field_jlt_pos_tech_stack",
+      "label": "Technology Stack",
+      "name": "jlt_tech_stack",
+      "aria-label": "",
+      "type": "textarea",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": { "width": "", "class": "", "id": "" },
+      "default_value": "",
+      "maxlength": "",
+      "placeholder": "",
+      "rows": "3",
+      "new_lines": "br"
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "post_type",
+        "operator": "==",
+        "value": "jlt_position"
+      }
+    ]
+  ],
+  "menu_order": 0,
+  "position": "acf_after_title",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "hide_on_screen": "",
+  "active": true,
+  "description": "",
+  "show_in_rest": 0,
+  "version": 2,
+  "modified": 0
+}

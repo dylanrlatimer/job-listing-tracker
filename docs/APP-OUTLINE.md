@@ -1,10 +1,10 @@
-# Job Listing Tracker: App Outline v2
+# Job Listing Tracker: App Outline v3
 
 ## Document purpose
 
-This document defines the scope, architecture, and delivery plan for version 1 of Job Listing Tracker. It is the authority for what the application does and which parts of the WordPress stack own each responsibility.
+This document defines the scope, architecture, and delivery plan for version 1 of Job Listing Tracker. It supersedes [APP-OUTLINE-v2.md](APP-OUTLINE-v2.md) and is the authority for what the application does and which parts of the WordPress stack own each responsibility.
 
-Field definitions, storage details, relationships, and deletion rules belong in [SCHEMA-v3.md](SCHEMA-v3.md).
+Field definitions, storage details, relationships, and deletion rules belong in [SCHEMA.md](SCHEMA.md).
 
 ## Purpose
 
@@ -33,12 +33,12 @@ Version 1 must support:
 
 The application has four records:
 
-| Record | Visibility | Owner | Purpose |
-| --- | --- | --- | --- |
-| Company | Public when published | Site | Shared organization profile |
-| Position | Public when published | Site | Relevant opening belonging to one company |
-| Company entry | Private | User | The user's company-level status and notes |
-| Position entry | Private | User | The user's application status, date, and notes |
+| Record         | Visibility            | Owner | Purpose                                        |
+| -------------- | --------------------- | ----- | ---------------------------------------------- |
+| Company        | Public when published | Site  | Shared organization profile                    |
+| Position       | Public when published | Site  | Relevant opening belonging to one company      |
+| Company entry  | Private               | User  | The user's company-level status and notes      |
+| Position entry | Private               | User  | The user's application status, date, and notes |
 
 Saving a company creates a company entry; it does not copy the company. Saving a position creates a position entry; it does not copy the position. A user may track a position only after adding its company to their bank.
 
@@ -104,17 +104,18 @@ A user may stop tracking a position at any time. A company cannot be removed fro
 
 Version 1 requires these front-end screens:
 
-| Screen | Access | Responsibility |
-| --- | --- | --- |
-| Company directory | Public | Browse published companies |
-| Company detail | Public | Show one company and its published positions |
-| Position detail | Public | Show one position and link to its original source |
-| Login, registration, password recovery | Public | Front-end account access |
-| Bank overview | Signed-in user | List the user's saved companies and tracked-position summaries |
-| Banked company detail | Entry owner | Edit company tracking and manage positions at that company |
-| Tracked position detail | Entry owner | Edit position status, application date, and notes |
+| Screen                                 | Access         | Responsibility                                                 |
+| -------------------------------------- | -------------- | -------------------------------------------------------------- |
+| Company directory                      | Public         | Browse published companies                                     |
+| Company detail                         | Public         | Show one company and its published positions                   |
+| Position detail                        | Public         | Show one position and link to its original source              |
+| Login, registration, password recovery | Public         | Front-end account access                                       |
+| Bank overview                          | Signed-in user | List the user's saved companies and tracked-position summaries |
+| Banked company detail                  | Entry owner    | Edit company tracking and manage positions at that company     |
+| Tracked position detail                | Entry owner    | Edit position status, application date, and notes              |
+| Settings                               | Signed-in user | Show the account email and links to reset the password or log out |
 
-The bank can use one WordPress Page with server-rendered views selected by validated query parameters. Clean custom rewrite routes are optional polish, not a version 1 dependency.
+The bank uses one WordPress Page with server-rendered views selected by validated query parameters. Clean custom rewrite routes are optional polish, not a version 1 dependency.
 
 WordPress Admin supplies the company and position editing screens. Private entries are not exposed as editable admin screens.
 
@@ -134,6 +135,7 @@ One project-specific plugin owns application behavior:
 - Handles add, edit, and remove actions.
 - Supplies the bank page controller and reusable view helpers.
 - Loads the source-controlled ACF field definitions.
+- Provides a WP-CLI command that loads shared companies and positions from CSV.
 
 Business rules stay in the plugin so they survive a theme change.
 
@@ -143,7 +145,7 @@ One project-specific theme owns presentation:
 
 - Company archive and single templates.
 - Position single template.
-- Bank templates and shared view components.
+- Bank and settings templates and shared view components.
 - Responsive layout, typography, and styles.
 - Small progressive enhancements written in vanilla JavaScript.
 
@@ -151,11 +153,11 @@ Version 1 is server-rendered PHP. It does not require React, a front-end framewo
 
 ### Third-party plugins
 
-| Plugin | Environment | Use |
-| --- | --- | --- |
-| Advanced Custom Fields Free | Development and production | Administrator field UI for shared companies and positions |
-| Theme My Login | Development and production | Front-end registration, login, logout, and password recovery using WordPress accounts |
-| Query Monitor | Development only | Inspect queries, hooks, errors, and template behavior |
+| Plugin                      | Environment                | Use                                                                                   |
+| --------------------------- | -------------------------- | ------------------------------------------------------------------------------------- |
+| Advanced Custom Fields Free | Development and production | Administrator field UI for shared companies and positions                             |
+| Theme My Login              | Development and production | Front-end registration, login, logout, and password recovery using WordPress accounts |
+| Query Monitor               | Development only           | Inspect queries, hooks, errors, and template behavior                                 |
 
 ACF field groups are stored as Local JSON with the custom plugin so field configuration is version-controlled. ACF is not used to build the users' private tracking forms.
 
@@ -173,9 +175,9 @@ The repository contains:
 - `wp-env` configuration.
 - Project documentation and tests.
 
-The repository does not contain WordPress core, a local database dump, generated uploads, secrets, or third-party plugin source.
+The repository does not contain WordPress core, a local database dump, generated uploads, secrets, or third-party plugin source. `wp-env` installs Advanced Custom Fields, Theme My Login, and Query Monitor from WordPress.org.
 
-The initial spreadsheet is reference material for a one-time content entry pass. It does not define the application schema, and version 1 does not require a reusable importer.
+A WP-CLI command can load the shared directory from CSV. That is an administrator content tool. It does not define the schema, does not import bank entries, and is not a public or scheduled import product. See [CSV-IMPORT.md](CSV-IMPORT.md).
 
 ## Security and privacy
 
@@ -188,6 +190,8 @@ The initial spreadsheet is reference material for a one-time content entry pass.
 - The deployment should discourage indexing because it is a portfolio demonstration, not a search-acquisition project.
 
 ## Delivery sequence
+
+This was the original build order. The application described above is now implemented.
 
 1. Create the `wp-env` project, custom plugin, and theme skeletons.
 2. Register the four post types and their fields.
@@ -228,4 +232,4 @@ Version 1 does not include:
 - Note history, audit logs, or revision workflows for private tracking.
 - Structured technology, company-type, employment-type, or location taxonomies.
 - Search-engine marketing or public growth features.
-- A reusable spreadsheet importer.
+- A public import UI, scheduled import, or job-site feed.

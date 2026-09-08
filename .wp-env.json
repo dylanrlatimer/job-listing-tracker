@@ -4,10 +4,25 @@
   "phpVersion": "8.3",
   "port": 8888,
   "autoPort": false,
-  "testsEnvironment": false,
+  "testsEnvironment": true,
   "config": {
     "WP_DEBUG_LOG": true,
     "WP_ENVIRONMENT_TYPE": "local",
     "DISALLOW_FILE_EDIT": true
+  },
+  "plugins": ["./wp-content/plugins/job-listing-tracker"],
+  "themes": ["./wp-content/themes/job-listing-tracker"],
+  "mappings": {
+    "wp-content/jlt-data": "./data"
+  },
+  "env": {
+    "development": {
+      "plugins": [
+        "https://downloads.wordpress.org/plugin/advanced-custom-fields.zip",
+        "https://downloads.wordpress.org/plugin/theme-my-login.zip",
+        "https://downloads.wordpress.org/plugin/query-monitor.zip",
+        "./wp-content/plugins/job-listing-tracker"
+      ]
+    }
   }
 }
