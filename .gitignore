@@ -14,3 +14,4 @@ data/*.csv
 
 .DS_Store
 Thumbs.db
+wp-content/plugins/job-listing-tracker/.phpunit.result.cache

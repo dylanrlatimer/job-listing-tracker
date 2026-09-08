@@ -122,7 +122,6 @@ job-listing-tracker/
         template-parts/
         assets/
           css/main.css
-          js/main.js
 ```
 
 `job-listing-tracker.php` is a small bootstrap file. The files in `includes/` group code by responsibility rather than introducing a class for every noun. Use one namespace or a consistent `jlt_` prefix throughout. Do not add Composer autoloading unless the code actually grows into a class-based structure that benefits from it.
